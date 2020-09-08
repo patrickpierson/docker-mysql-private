@@ -85,8 +85,8 @@ workflows:
             - app2-build
       - terraform:
           requires:
-            - app-build
-            - app2-build
+            - app-push
+            - app2-push
       - terraform-apply:
           requires:
             - terraform
