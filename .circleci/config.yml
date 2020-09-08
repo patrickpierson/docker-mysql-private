@@ -2,7 +2,7 @@ version: 2.1
 defaults: &workdirAndImage
   working_directory: ~/workspace
   docker:
-    - image: patrickpierson/circleci
+    - image: circleci/buildpack-deps:stretch
 jobs:
   app-build:
     <<: *workdirAndImage 
