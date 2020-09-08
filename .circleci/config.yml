@@ -46,32 +46,32 @@ jobs:
       - setup_remote_docker:
          docker_layer_caching: true
       - run:
-          name: Publish app to Docker hub
+          name: Publish app2 to Docker hub
           command: |
             echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
             docker push $IMAGE_NAME:app2-testing
-    terraform:
-        docker:
-            - image: patrickcpierson/terraform-aws:latest
-        steps:
-            - checkout
-            - run:
-                  name: terraform-init
-                  command: echo "Terraform Init running"; sleep 5
-            - run:
-                  name: terraform-plan
-                  command: echo "Terraform Plan Running"; sleep 5
-    terraform-apply:
-        docker:
-            - image: patrickcpierson/terraform-aws:latest
-        steps:
-            - checkout
-            - run:
-                  name: terraform-init
-                  command: echo "Terraform Init running"; sleep 5
-            - run:
-                  name: terraform-apply
-                  command: echo "Terraform Apply running"; sleep 5
+  terraform:
+    docker:
+      - image: patrickcpierson/terraform-aws:latest
+    steps:
+      - checkout
+      - run:
+          name: terraform-init
+          command: echo "Terraform Init running"; sleep 5
+      - run:
+          name: terraform-plan
+          command: echo "Terraform Plan Running"; sleep 5
+  terraform-apply:
+    docker:
+      - image: patrickcpierson/terraform-aws:latest
+    steps:
+      - checkout
+      - run:
+          name: terraform-init
+          command: echo "Terraform Init running"; sleep 5
+      - run:
+          name: terraform-apply
+          command: echo "Terraform Apply running"; sleep 5
 workflows:
   build_deploy:
     jobs:
