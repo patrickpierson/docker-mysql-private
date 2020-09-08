@@ -1,10 +1,13 @@
 version: 2.1
+defaults: &workdirAndImage
+  working_directory: ~/workspace
+  docker:
+    - image: patrickpierson/circleci
 jobs:
   app-build:
+    <<: *workdirAndImage 
     environment:
       IMAGE_NAME: patrickpierson/circleci
-    docker:
-      - image: circleci/buildpack-deps:stretch
     steps:
       - checkout
       - setup_remote_docker
@@ -12,10 +15,9 @@ jobs:
           name: Build App
           command: cd app; docker build -t $IMAGE_NAME:app-testing .
   app-push:
+    <<: *workdirAndImage
     environment:
       IMAGE_NAME: patrickpierson/circleci
-    docker:
-      - image: circleci/buildpack-deps:stretch
     steps:
       - setup_remote_docker
       - run:
