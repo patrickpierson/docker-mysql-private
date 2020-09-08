@@ -15,7 +15,7 @@ jobs:
       - run:
           name: Build App
           command: cd app; docker build -t $IMAGE_NAME:app-testing .
-      - push:
+      - run:
           name: Publish app to Docker hub
           command: |
             echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
