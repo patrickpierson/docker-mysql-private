@@ -7,7 +7,7 @@ jobs:
   app-build:
     <<: *workdirAndImage 
     environment:
-      IMAGE_NAME: patrickpierson/circleci
+      IMAGE_NAME: patrickcpierson/circleci
     steps:
       - checkout
       - setup_remote_docker:
@@ -23,7 +23,7 @@ jobs:
   #app-push:
   #  <<: *workdirAndImage
   #  environment:
-  #    IMAGE_NAME: patrickpierson/circleci
+  #    IMAGE_NAME: patrickcpierson/circleci
   #  steps:
   #    - setup_remote_docker:
   #       docker_layer_caching: true
