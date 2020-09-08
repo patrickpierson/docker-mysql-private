@@ -1,11 +1,11 @@
 version: 2.1
-defaults: &workdirAndImage
+defaults: &Image
   working_directory: ~/workspace
   docker:
     - image: circleci/buildpack-deps:stretch
 jobs:
   app-build:
-    <<: *workdirAndImage 
+    <<: *Image 
     environment:
       IMAGE_NAME: patrickcpierson/circleci
     steps:
@@ -16,7 +16,7 @@ jobs:
           name: Build App
           command: cd app; docker build -t $IMAGE_NAME:app-testing .
   app-push:
-    <<: *workdirAndImage
+    <<: *Image
     environment:
       IMAGE_NAME: patrickcpierson/circleci
     steps:
