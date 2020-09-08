@@ -27,6 +27,30 @@ jobs:
           command: |
             echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
             docker push $IMAGE_NAME:app-testing
+  app2-build:
+    <<: *Image
+    environment:
+      IMAGE_NAME: patrickcpierson/circleci
+    steps:
+      - checkout
+      - setup_remote_docker:
+         docker_layer_caching: true
+      - run:
+          name: Build App
+          command: cd app2; docker build -t $IMAGE_NAME:app2-testing .
+  app2-push:
+    <<: *Image
+    environment:
+      IMAGE_NAME: patrickcpierson/circleci
+    steps:
+      - setup_remote_docker:
+         docker_layer_caching: true
+      - run:
+          name: Publish app to Docker hub
+          command: |
+            echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+            docker push $IMAGE_NAME:app2-testing
+
 workflows:
   build_deploy:
     jobs:
@@ -34,3 +58,7 @@ workflows:
       - app-push:
           requires:
             - app-build
+      - app2-build
+      - app2-push:
+          requires:
+            - app2-build
