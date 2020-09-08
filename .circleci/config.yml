@@ -15,22 +15,27 @@ jobs:
       - run:
           name: Build App
           command: cd app; docker build -t $IMAGE_NAME:app-testing .
-  app-push:
-    <<: *workdirAndImage
-    environment:
-      IMAGE_NAME: patrickpierson/circleci
-    steps:
-      - setup_remote_docker:
-         docker_layer_caching: true
-      - run:
+      - push:
           name: Publish app to Docker hub
           command: |
             echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
             docker push $IMAGE_NAME:app-testing
+  #app-push:
+  #  <<: *workdirAndImage
+  #  environment:
+  #    IMAGE_NAME: patrickpierson/circleci
+  #  steps:
+  #    - setup_remote_docker:
+  #       docker_layer_caching: true
+  #    - run:
+  #        name: Publish app to Docker hub
+  #        command: |
+  #          echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+  #          docker push $IMAGE_NAME:app-testing
 workflows:
   build_deploy:
     jobs:
       - app-build
-      - app-push:
-          requires:
-            - app-build
+      #- app-push:
+      #    requires:
+      #      - app-build
