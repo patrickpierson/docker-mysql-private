@@ -23,7 +23,7 @@ jobs:
       - setup_remote_docker:
          docker_layer_caching: true
       - run:
-          name: Publish Docker Image to Docker Hub
+          name: Publish app to Docker hub
           command: |
             echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
             docker push $IMAGE_NAME:app-testing
