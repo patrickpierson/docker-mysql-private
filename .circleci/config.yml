@@ -10,7 +10,8 @@ jobs:
       IMAGE_NAME: patrickpierson/circleci
     steps:
       - checkout
-      - setup_remote_docker
+      - setup_remote_docker:
+         docker_layer_caching: true
       - run:
           name: Build App
           command: cd app; docker build -t $IMAGE_NAME:app-testing .
@@ -19,7 +20,8 @@ jobs:
     environment:
       IMAGE_NAME: patrickpierson/circleci
     steps:
-      - setup_remote_docker
+      - setup_remote_docker:
+         docker_layer_caching: true
       - run:
           name: Publish Docker Image to Docker Hub
           command: |
